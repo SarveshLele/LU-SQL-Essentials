@@ -1,0 +1,41 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| customers          |
+| information_schema |
+| insta              |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> create database instagram;
+Query OK, 1 row affected (0.16 sec)
+
+mysql> use instagram;
+Database changed
+mysql> create table messages(author varchar(20) primary key, receiver varchar(20) not null, date_time datetime);
+Query OK, 0 rows affected (0.82 sec)
+
+mysql> create table stories(author varchar(20) not null, date_time datetime, viewed_by text);
+Query OK, 0 rows affected (1.68 sec)
+
+mysql> create table posts(author varchar(20), date_time datetime, post_id mediumint primary key, caption text, liked_by text);
+Query OK, 0 rows affected (1.15 sec)
+
+mysql> create table user(user_id int primary key, date_time datetime, bio text, display_picture blob);
+Query OK, 0 rows affected (1.31 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_instagram |
++---------------------+
+| messages            |
+| posts               |
+| stories             |
+| user                |
++---------------------+
+4 rows in set (0.00 sec)
+
