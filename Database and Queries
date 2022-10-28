@@ -1,0 +1,130 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| customers          |
+| information_schema |
+| insta              |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.03 sec)
+
+mysql> use customers;
+Database changed
+mysql> show tables;
+Empty set (0.01 sec)
+
+mysql> create table customer(customer_id int not null, first_name varchar(20), last_name varchar(20), city varchar(10));
+Query OK, 0 rows affected (0.92 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_customers |
++---------------------+
+| customer            |
++---------------------+
+1 row in set (0.00 sec)
+
+
+mysql> create table orders(order_id mediumint primary key auto_increment, customer_id int not null, order_date date, amount mediumint not null);
+Query OK, 0 rows affected (0.96 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_customers |
++---------------------+
+| customer            |
+| orders              |
++---------------------+
+2 rows in set (0.01 sec)
+
+
+mysql> desc customer;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| customer_id | int         | NO   |     | NULL    |       |
+| first_name  | varchar(20) | YES  |     | NULL    |       |
+| last_name   | varchar(20) | YES  |     | NULL    |       |
+| city        | varchar(10) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+mysql> desc orders;
++-------------+-----------+------+-----+---------+----------------+
+| Field       | Type      | Null | Key | Default | Extra          |
++-------------+-----------+------+-----+---------+----------------+
+| order_id    | mediumint | NO   | PRI | NULL    | auto_increment |
+| customer_id | int       | NO   |     | NULL    |                |
+| order_date  | date      | YES  |     | NULL    |                |
+| amount      | mediumint | NO   |     | NULL    |                |
++-------------+-----------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> create table products(product_id mediumint primary key auto_increment, selli
+Query OK, 0 rows affected (0.69 sec)
+
+mysql> desc products;
++---------------+-----------+------+-----+---------+----------------+
+| Field         | Type      | Null | Key | Default | Extra          |
++---------------+-----------+------+-----+---------+----------------+
+| product_id    | mediumint | NO   | PRI | NULL    | auto_increment |
+| selling_price | mediumint | NO   |     | NULL    |                |
+| discount      | mediumint | YES  |     | NULL    |                |
++---------------+-----------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> insert into customer values(1, "Alex", "Jones", "PUN");
+Query OK, 1 row affected (0.14 sec)
+
+
+mysql> select * from customer;
++-------------+------------+-----------+------+
+| customer_id | first_name | last_name | city |
++-------------+------------+-----------+------+
+|           1 | Alex       | Jones     | PUN  |
++-------------+------------+-----------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into customer values(4, "Thomas", "Gray", "PUN");
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from customer;
++-------------+------------+-----------+------+
+| customer_id | first_name | last_name | city |
++-------------+------------+-----------+------+
+|           1 | Alex       | Jones     | PUN  |
+|           4 | Thomas     | Gray      | PUN  |
++-------------+------------+-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> select first_name as "First Name", city from customer where customer_id > 2;
++------------+------+
+| First Name | city |
++------------+------+
+| Thomas     | PUN  |
++------------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into orders(customer_id, amount) values (4, 20);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from orders;
++----------+-------------+------------+--------+
+| order_id | customer_id | order_date | amount |
++----------+-------------+------------+--------+
+|        1 |           4 | NULL       |     20 |
++----------+-------------+------------+--------+
+1 row in set (0.01 sec)
+
+mysql> select * from customer inner join orders on customer.customer_id = orders.customer_id;
++-------------+------------+-----------+------+----------+-------------+------------+--------+
+| customer_id | first_name | last_name | city | order_id | customer_id | order_date | amount |
++-------------+------------+-----------+------+----------+-------------+------------+--------+
+|           4 | Thomas     | Gray      | PUN  |        1 |           4 | NULL       |     20 |
++-------------+------------+-----------+------+----------+-------------+------------+--------+
+1 row in set (0.00 sec)
+
